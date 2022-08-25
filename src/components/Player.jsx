@@ -4,6 +4,7 @@ import { Details } from './Details';
 export const Player = (props) => {
   const audioEl = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playing, setPlaying] = useState(null);
   useEffect(() => {
     isPlaying ? audioEl.current.play() : audioEl.current.pause();
   });
@@ -28,12 +29,19 @@ export const Player = (props) => {
       });
     }
   };
+
   return (
     <div className="player">
       <h4>Playing Now</h4>
       <Details song={props.songs[props.currentSongIndex]} />
-      <Control isPlaying={isPlaying} setIsPlaying={setIsPlaying} skipSong={skipSong} />
+      <Control
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+        skipSong={skipSong}
+        playing={playing}
+      />
       <audio
+        onEnded={() => setPlaying(skipSong())}
         className="player__audio"
         src={props.songs[props.currentSongIndex].src}
         ref={audioEl}
@@ -41,8 +49,9 @@ export const Player = (props) => {
       <p>
         Next Up:
         <span>
-          {props.songs[props.nextSongIndex].title} <b>by</b>{' '}
-          {props.songs[props.nextSongIndex].artist}
+          {`${props.songs[props.nextSongIndex].title} by  ${
+            props.songs[props.nextSongIndex].artist
+          }`}
         </span>
       </p>
     </div>

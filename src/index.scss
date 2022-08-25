@@ -105,9 +105,10 @@ code {
     }
   }
   audio {
-    box-shadow: 0 0 10px 0 #fff inset, 0 0 5px 4px #fff;
-    border-radius: 50px;
     outline-width: 0;
+    input {
+      background-color: red;
+    }
   }
   audio::-webkit-media-controls-play-button {
     display: none;
